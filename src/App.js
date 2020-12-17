@@ -14,6 +14,7 @@ class App extends React.Component {
       }
     }
   }
+   
   changeGlobalContextName = event => {
     const { value } = event.target
     this.setState({
@@ -24,9 +25,20 @@ class App extends React.Component {
     })
   }
 
+  changeAge = value => {
+    this.setState({
+      conntextValue: {
+        ...this.state.conntextValue,
+        age: value
+      }
+    })
+  }
+  
   render() {
+    const { conntextValue } = this.state
+    
     return(
-      <MyGlobalContext.Provider value={this.state.conntextValue}>
+      <MyGlobalContext.Provider value={{...conntextValue,  changeAge: this.changeAge}}>
         <MyRef />
         <hr />
         <HOC />

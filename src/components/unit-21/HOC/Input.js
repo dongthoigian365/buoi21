@@ -1,6 +1,7 @@
 import React from 'react'
 import Card from './Card'
 import { MyGlobalContext } from './../../context/MyGlobalContext'
+import MyHOCContext from './MyHOCContext'
 
 
 class Input extends React.Component {
@@ -61,6 +62,17 @@ class Input extends React.Component {
                 <p style={{ color: 'red' }}>{this.state.errorMessage}</p>
               }
               <p>{globalContextValue.name}</p>
+
+              <hr />
+              <MyHOCContext.Consumer>
+                {
+                  hocContextValue => {
+                    <h2>{hocContextValue.name}</h2>
+                  }
+                }
+              </MyHOCContext.Consumer>
+
+              <button onClick={() => globalContextValue.changeAge(globalContextValue.age + 1)}>Change age</button>
           </div>  
           )
         }
