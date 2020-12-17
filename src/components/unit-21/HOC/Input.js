@@ -60,7 +60,7 @@ class Input extends React.Component {
                 this.state.errorMessage &&
                 <p style={{ color: 'red' }}>{this.state.errorMessage}</p>
               }
-              <p>{globalContextValue.age}</p>
+              <p>{globalContextValue.name}</p>
           </div>  
           )
         }
