@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useContext } from 'react'
 import axios from 'axios'
-import { Table, Tag, Button } from 'antd'
+import { Table, Tag, Button,Tooltip,Popconfirm } from 'antd'
 import { MyGlobalContext } from './../context/MyGlobalContext'
 import { UserOutlined, EyeOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { Popconfirm, message } from 'antd'
 
 
 const UserList = () => {
@@ -56,9 +55,11 @@ const UserList = () => {
       render: (cell, row) => {
         return (
           <>
-            <Button shape='circle'>
-              <EyeOutlined />
-            </Button>
+            <Tooltip title='Xem chi tiet User' trigger={['click', 'focus']}>
+              <Button shape='circle'>
+                <EyeOutlined />
+              </Button>
+            </Tooltip>
             <Button shape='circle'>
               <EditOutlined />
             </Button>
