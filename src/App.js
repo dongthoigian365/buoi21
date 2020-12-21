@@ -1,71 +1,18 @@
 import React, { useState } from 'react'
-import Form from './components/unit-22/Form'
-// import MyRef from './components/unit-21/MyRef';
-// import HOC from './components/unit-21/HOC/index'
-// import { MyGlobalContext } from '../src/components/context/MyGlobalContext'
+import { MyGlobalContext } from './components/context/MyGlobalContext'
 
-
-// class App extends React.Component {
-//   constructor() {
-//     super();
-//     this.state = {
-//       conntextValue: {
-//         name: 'Nguyen Van a',
-//         age: 12
-//       }
-//     }
-//   }
-   
-//   changeGlobalContextName = event => {
-//     const { value } = event.target
-//     this.setState({
-//       conntextValue: {
-//         ...this.state.conntextValue,
-//         name: value
-//       }
-//     })
-//   }
-
-//   changeAge = value => {
-//     this.setState({
-//       conntextValue: {
-//         ...this.state.conntextValue,
-//         age: value
-//       }
-//     })
-//   }
-  
-//   render() {
-//     // const { conntextValue } = this.state
-
-//     return (
-//       // <MyGlobalContext.Provider value={{...conntextValue,  changeAge: this.changeAge}}>
-//       //   <MyRef />
-//       //   <hr />
-//       //   <HOC />
-
-//       //   <input onChange={this.changeGlobalContextName} />
-//       // </MyGlobalContext.Provider>
-//       <>
-//         <Form />
-//       </>
-//     )
-//   }
-// }
-
-// export default App;
+import UserList from './components/unit-23/UserList'
 
 const App = () => {
-  const [isShow, setIsShow] = useState(true)
+  const [gContext] = useState({
+    user: null
+  })
 
   return (
     <>
-      {
-        isShow &&
-        <Form />
-      }
-
-      <button onClick={()=> setIsShow(!isShow)}>Toggle render Form</button>
+      <MyGlobalContext.Provider value={gContext}>
+        <UserList />
+      </MyGlobalContext.Provider>
     </>
   )
 }
