@@ -2,12 +2,16 @@ import React, { useState, useEffect, useMemo, useReducer } from 'react'
 
 const myReducer = (state, action) => {
   switch(action.type) {
-    case 'ICREMENT': {
+    case 'INCREMENT': {
       return {
         ...state,
-        count: state.count + 1
+        count: state.count + action.number
       }
     }
+    // case 'INCREMENT':
+    //   state.count = state.count + action.number
+    //   console.log('gia tri da dc gan', state)
+    //   return state
     case 'DECREMENT': {
       return {
         ...state,
@@ -43,7 +47,8 @@ const TestUseMemo = () => {
       {/* <h1>Sum: {c}</h1> */}
       {/* <button onClick={() => setCount(count + 1)}>Increment</button>
       <button onClick={() => setA(a + 1)}>Increment A</button> */}
-      <button onClick={() => dispatch({type: 'ICREMENT'})}>Increment Count</button>
+      <button onClick={() => dispatch({type: 'INCREMENT', number: 1})}>Increment Count</button>
+      <button onClick={() => dispatch({type: 'INCREMENT', number: 2})}>Increment Count</button>
       <button onClick={() => dispatch({type: 'DECREMENT'})}>Decrement Count</button>
     </>
   )
