@@ -6,10 +6,11 @@ import axios from 'axios'
 
 
 const SUBJECT_LIST = [
-  {id: 1, name: 'reactjs'},
-  {id: 2, name: 'nodejs'},
-  {id: 3, name: 'veujs'},
+  { id: 1, name: 'reactjs' },
+  { id: 2, name: 'nodejs' },
+  { id: 3, name: 'veujs' },
 ]
+
 
 const initData = [
   {
@@ -28,7 +29,7 @@ const initData = [
   },
 ]
 
-const EditableCell = ({children, editing, dataIndex, inputType, selectList, currentSelected}) => {
+const EditableCell = ({ children, editing, dataIndex, inputType, selectList, currentSelected }) => {
   const isNomalMode = ['text', 'number', 'textarea'].includes(inputType)
   const isSelectMode = inputType === 'select'
   let Component = Input
@@ -36,19 +37,25 @@ const EditableCell = ({children, editing, dataIndex, inputType, selectList, curr
     Component = Input.TextArea
   }
 
-  let render = null
+  let renderEditing = null
   if (isNomalMode) {
-    render = <Component type={inputType} />
-  } else if(isSelectMode) {
-    render = (
-      <Select InitialValues={currentSelected}>
-      {
-        selectList.map(item => {
-          return <Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>
-        })
-      }
-    </Select>  
+    renderEditing = <Component type={inputType} />
+  } else if (isSelectMode) {
+    renderEditing = (
+      <Select>
+        {
+          selectList.map(item => {
+            return <Select.Option key={item.id} value={item.id}>{item.name}</Select.Option>
+          })
+        }
+      </Select>
     )
+  }
+
+  let renderReadOnly = children
+  if (isSelectMode) {
+    const item = selectList.find(item => item.id === currentSelected)
+    renderReadOnly = item ? item.name : ''
   }
 
 
@@ -66,11 +73,11 @@ const EditableCell = ({children, editing, dataIndex, inputType, selectList, curr
               }
             </Select>
           )} */}
-          {render}
+          {renderEditing}
         </Form.Item>
       ) : (
-        children
-      )
+          renderReadOnly
+        )
     }
   </td>
 }
@@ -79,7 +86,7 @@ const MyTable = () => {
   const [form] = Form.useForm()
   const [items, setItems] = useState(initData)
   const [editingKey, setEditingKey] = useState('')
-  const [subjexts, setSubjects] = useState([])
+  const [subjects, setSubjects] = useState([])
 
   const handleDelete = key => {
     const newItems = items.filter(item => item.key !== key)
@@ -161,7 +168,7 @@ const MyTable = () => {
         record,
         inputType: 'select',
         dataIndex: 'subject',
-        selectList: subjexts,
+        selectList: subjects,
         currentSelected: record.subject,
         editing: isEditing(record)
       })
@@ -184,8 +191,8 @@ const MyTable = () => {
                 <Button onClick={() => setEditingKey('')}>Cancel</Button>
               </>
             ) : (
-              <Button onClick={() => edit(record)}>Edit</Button>
-            )
+                <Button onClick={() => edit(record)}>Edit</Button>
+              )
           }
 
           <Popconfirm title="Sure to delete?" onConfirm={() => handleDelete(record.key)}>
@@ -204,16 +211,16 @@ const MyTable = () => {
         name: '',
         age: '',
         address: '',
-        
+
       }
     ])
   }
 
   const fetchSubjects = () => {
     axios.get('https://jsonplaceholder.typicode.com/todos')
-    .then(() => {
-      setSubjects(SUBJECT_LIST)
-    })
+      .then(() => {
+        setSubjects(SUBJECT_LIST)
+      })
   }
 
   useEffect(() => {
