@@ -1,42 +1,38 @@
 import React, { useState, useEffect } from 'react'
 
 const Form = ({ color }) => {
-  const [name, setname] = useState('')
-  const [age, setage] = useState(0)
-  const [score, setscore] = useState(0)
-  // console.log('props', color)
+  const [name, setName] = useState('')
+  const [age, setAge] = useState(0)
+  const [score, setScore] = useState(0)
 
   useEffect(() => {
-    console.log('lan dau tien render')
+    console.log('lần đầu tiên render')
 
     return () => {
-      console.log('Form da bi go khoi trang')
+      console.log('Form đã bị gỡ khỏi DOM')
     }
   }, [])
 
-  // useEffect(() => {
-  //   console.log('rung')
-  // })
-
   useEffect(() => {
-    console.log('name bi thay doi')
-  }, [name, score])
+    console.log('name bị thay đổi')
+  }, [name])
 
   return (
     <>
-      <h1>Tao components</h1>
-      <p>Nhap ten:</p>
-      <input value={name} onChange={event => setname(event.target.value)} />
-      <p>Nhap tuoi:</p>
-      <input type='number' value={age} onChange={event => setage(event.target.value)} />
-      <p>Nhap diem:</p>
-      <input type='number' value={score} onChange={event => setscore(event.target.value)} />
+      <h1>Tạo component bằng function</h1>
+      <p>Nhập tên:</p>
+      <input value={name} onChange={event => setName(event.target.value)} />
 
+      <p>Nhập tuổi:</p>
+      <input value={age} type="number" onChange={event => setAge(event.target.value)} />
+
+      <p>Nhập điểm:</p>
+      <input value={score} type="number" onChange={event => setScore(event.target.value)} />
     </>
   )
 }
 
-Form.defaultProps = {
+Form.defaultProps =  {
   color: 'red'
 }
 

@@ -1,8 +1,6 @@
 import React from 'react'
 import Card from './Card'
-import { MyGlobalContext } from './../../context/MyGlobalContext'
-import MyHOCContext from './MyHOCContext'
-
+import { MyGlobalContext } from './../../../context/MyGlobalContext'
 
 class Input extends React.Component {
   state = {
@@ -10,25 +8,27 @@ class Input extends React.Component {
     errorMessage: ''
   }
 
-  validate = (value) => {  
+  componentDidMount() {
+    console.log(this.context)
+  }
+
+  validate = (value) => {
     this.setState({
       errorMessage: ''
-    })  
-
+    })
     const { type, max } = this.props
 
-    if(type === 'text' && value.length > max) {
+    if (type === 'text' && value.length > max) {
       this.setState({
-        errorMessage: `Do dai toi da la ${max}`
+        errorMessage: `Độ dài tối đa là ${max}`
       })
     }
 
-    if(type === 'number' && value > max) {
+    if (type === 'number' && value > max) {
       this.setState({
-        errorMessage: `Gia tri toi da la ${max}`
+        errorMessage: `Giá trị tối đa là ${max}`
       })
     }
-
   }
 
   onChange = event => {
@@ -41,50 +41,26 @@ class Input extends React.Component {
     })
   }
 
-  componentDidMount() {
-    console.log(this.context)
-  }
-
   render() {
     return (
-      <>
-      <MyGlobalContext.Consumer>
+      <div>
+        <label>{this.props.label}</label>
+        <input
+          onChange={this.onChange}
+          type={this.props.type || 'text'}
+        />
         {
-          globalContextValue => (
-            <div>
-              <label>{this.props.label}</label>
-              <input
-                type={this.props.type || 'text'}
-                onChange={this.onChange}
-              />
-              {
-                this.state.errorMessage &&
-                <p style={{ color: 'red' }}>{this.state.errorMessage}</p>
-              }
-              <p>{globalContextValue.name}</p>
-
-              <hr />
-              <MyHOCContext.Consumer>
-                {
-                  hocContextValue => {
-                    <h2>{hocContextValue.name}</h2>
-                  }
-                }
-              </MyHOCContext.Consumer>
-
-              <button onClick={() => globalContextValue.changeAge(globalContextValue.age + 1)}>Change age</button>
-          </div>  
-          )
+          this.state.errorMessage &&
+          <p style={{ color: 'red' }}>{this.state.errorMessage}</p>
         }
-      </MyGlobalContext.Consumer>
-      </>
+      </div>
     )
   }
 }
 
-const InputInCard = MyComponent => class _InputInclass extends React.Component {
+const InputInCard = MyComponent => class _InputInCard  extends React.Component {
   render() {
-    return(
+    return (
       <>
         <Card>
           <MyComponent {...this.props} />
@@ -94,5 +70,5 @@ const InputInCard = MyComponent => class _InputInclass extends React.Component {
   }
 }
 
-//  
+Input.contextType = MyGlobalContext
 export default InputInCard(Input)
